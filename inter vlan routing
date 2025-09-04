@@ -96,6 +96,7 @@ Result:
 add ip to swtich to allow ssh
 interface vlan 10
 ip address 192.168.10.10 255.255.255.0
+exit first
 ip default-gateway 192.168.10.1
 
 the deafult -gateway is to allow other vlan to ssh aswell.
