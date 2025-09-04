@@ -12,7 +12,8 @@ VLAN Configuration (on both switches):
 
     Created VLANs:
 
-        vlan 10
+        vlan 10 (creates vlan)
+        name sigma (creates name)
 
         vlan 20
 
@@ -40,13 +41,13 @@ Router Configuration (Router-on-a-Stick):
 
     Subinterface for VLAN 10:
 
-        interface fa0/0.10
+        interface g0/0/0.10
 
         encapsulation dot1Q 10
 
         ip address 192.168.10.1 255.255.255.0
 
-        ip helper-address 192.168.20.2
+        ip helper-address 192.168.20.2 to relay dhcp broadcst to dhcp server
 
     Subinterface for VLAN 20:
 
@@ -74,13 +75,26 @@ DHCP Server Setup (in VLAN 20):
 
         IP range: 192.168.10.100 to 192.168.10.200
 
+
+
+Turn the port connected the swtich to the router into a trunk port 
+    configure terminal
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk encapsulation dot1q   ← (only needed on older switches)
+ switchport trunk allowed vlan 10,20    ← (optional: restrict to specific VLANs)
+exit
+
+
+
+
 Switch-to-Switch Connection:
 
-    Connected switches via fa0/24 on each
+    Connected switches via g0/1 and g0/2  on each
 
     Enabled trunking:
 
-        interface fa0/24
+        interface g0/1 or g0/2
 
         switchport mode trunk
 
