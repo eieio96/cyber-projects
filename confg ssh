@@ -1,3 +1,5 @@
+## SSH ON A SWTICH
+
 ##Create enbale password
 enable secret sigma
 
@@ -18,6 +20,7 @@ enter 1024 bits
 ## enable vty lines and only allow ssh
 line vty 0 4
 transport input ssh
+login local
 
 ## add swtich to a vlan
 int vlan 20 
@@ -25,3 +28,37 @@ ip addr 192.168.20.20 255.255.255.0
 
 ## add default gateway for intervlan routing
 ip default-gateway 192.168.20.1
+
+
+## SSH on a router (make sure router on a stick is set up properly )
+
+configure terminal
+hostname sigmaRotuer
+ip domain-name sigma.wolf
+
+
+##Create enbale password
+enable secret sigma
+
+##Create admin account
+username admin privilege 15 secret sigma
+
+##opiontal change admin pass
+username admin secret sigmawolf
+
+## create host name
+hostname sigma
+
+## create key for ssh
+ip domain-name sigma.wolf
+crypto key generate rsa
+enter 1024 bits
+
+## enable vty lines and only allow ssh
+line vty 0 4
+transport input ssh
+login local
+ip ssh version 2
+
+write memory to save
+write memory
