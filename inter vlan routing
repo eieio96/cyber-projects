@@ -91,3 +91,11 @@ Result:
     VLAN 20 is isolated except for DHCP services
 
     Inter-VLAN routing is handled by the router’s subinterfaces
+
+
+add ip to swtich to allow ssh
+interface vlan 10
+ip address 192.168.10.10 255.255.255.0
+ip default-gateway 192.168.10.1
+
+the deafult -gateway is to allow other vlan to ssh aswell.
