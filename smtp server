@@ -1,0 +1,12 @@
+go to mail server
+make suer pop3 and smtp aer on
+
+create a domain name can be anything sigma.dmz.mail
+create user accounts
+
+now go to a endpoint device
+create a user
+name can be anything 
+email has to be a user created in mail server + domain name
+add incoming and outgoing mail server to be the mail server
+log in
