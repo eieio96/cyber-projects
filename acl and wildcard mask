@@ -14,9 +14,11 @@ place closest to source and its usally inbound
 acl for allowing access to dmz webserver, access to dns server but denies anything from touching interanl network
 enable 
 conf t
-access-list 100 permit tcp any host 10.10.1.2 eq 80
-access-list 100 permit ip host 8.8.8.8 any
-access-list 100 deny ip any 10.0.0.0 0.255.255.255      ## not nesscary because of implict deny at the end
-access-list 100 deny ip any 192.168.0.0 0.0.255.255     ## not nesscary because of implict deny at the end
+access-list 100 permit tcp any host 10.10.1.69 eq 80
+access-list 100 permit udp host 8.8.8.8 eq 53 any
+access-list 100 permit tcp host 8.8.8.8 eq 53 any
+access-list 100 deny ip any 10.0.0.0 0.255.255.255
+access-list 100 deny ip any 192.168.0.0 0.0.255.255
+
 int g/0/0/1
 access-list 100 in
