@@ -1,0 +1,5 @@
+dns server 
+  make a A record domain name --> ipv4
+  default route to the router
+  make sure the router has a default route
+  
