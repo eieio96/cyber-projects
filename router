@@ -1,8 +1,9 @@
 router need to be config to work
 
 conf t
-int INTFACE
-ip addr x.x.x.x 255.255.255.0 the ip of the network its connected to
+int g0/0/0/0
+no shutdown
+ip addr 192.168.1.1 255.255.255.0 the ip of the network its connected to
 set the default gateway of the devices to the ip of the router 
 
 connect the router to another router
