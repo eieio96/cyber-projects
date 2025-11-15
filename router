@@ -2,9 +2,21 @@ router need to be config to work
 
 conf t
 int g0/0/0/0
-no shutdown
+no shutdown (ints are admin down by deafult)
 ip addr 192.168.1.1 255.255.255.0 the ip of the network its connected to
-set the default gateway of the devices to the ip of the router 
+
+###set up an dhcp server
+router(config) ip dhcp excluded-address 192.168.1.1 192.168.1.10
+router(config) ip dhcp pool SIGMA_POOL
+router(dhcp-config) network 192.168.1.0 255.255.255.0
+router(dhcp-config)  default-router 192.168.1.1
+router(dhcp-config)  dns-server 8.8.8.8
+router(dhcp-config) domain-name brain.rot67
+
+##USEFUL DHCP COMMANDS
+router # show ip dhcp binding
+        show ip dhcp pool
+
 
 connect the router to another router
 connect using 255.255.255.252 mask
