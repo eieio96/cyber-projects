@@ -13,14 +13,14 @@ username admin secret sigmawolf
 hostname sigma
 
 ## create key for ssh
-ip domain-name sigma.wolf
+ip domain-name sigma.wolf (can be something bs RSA needs FQDM for ssh)
 crypto key generate rsa
 enter 1024 bits
 
 ## enable vty lines and only allow ssh
 line vty 0 4
 transport input ssh
-login local
+login local (forces username and password)
 
 ## add swtich to a vlan
 int vlan 20 
