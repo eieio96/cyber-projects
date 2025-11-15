@@ -1,3 +1,23 @@
+!!!! ##important facts about VLANs !!!!
+
+when you do 
+    interface range fa0/1 - 2
+
+            switchport mode access
+
+            switchport access vlan 10
+    all end point devices connected to that port will fall into that vlan
+
+VLANs are seperate esentially sperate networks in one switch and requires a router or layer 3 switch to function.
+END point devices are not awere they are even part of a vlan.
+Frame within vlans are not tagged, but when it leaves a trunk port it gets tagged with the vlan it came from.
+When a router recieves an tagged port it gets untagged and gets tagged with the vlan it belogns to.
+When the trunk port recives the tagged frame it strips it and sends it to the vlan it belongs to.
+TRUNK PORTS belong to all vlans
+Each Vlan has their own MAC ADDRESS TABLES
+
+
+
 Set up dhcp server where dhcp server is on a another network
 __________________________________________________________
 int 
