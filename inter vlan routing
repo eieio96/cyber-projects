@@ -8,6 +8,10 @@ when you do
             switchport access vlan 10
     all end point devices connected to that port will fall into that vlan
 
+Access port carries traffic for one vlan only !!! 
+Trunk port carries traffic for mutiple vlans used to connect switches and router on a stick.
+
+
 VLANs are seperate esentially sperate networks in one switch and requires a router or layer 3 switch to function.
 END point devices are not awere they are even part of a vlan.
 Frame within vlans are not tagged, but when it leaves a trunk port it gets tagged with the vlan it came from.
@@ -16,6 +20,45 @@ When the trunk port recives the tagged frame it strips it and sends it to the vl
 TRUNK PORTS belong to all vlans
 SUBINTERFACES on a router have the same MAC, this is fine because Each Vlan has their own MAC ADDRESS TABLES 
 
+##switch config for router on a stick
+##create vlans
+switch> enable
+switch# conf t
+switch(config)# vlan 10 (creates vlan10)
+switch(config-vlan)# name SIGMA (naming pruposes only)
+exit
+
+switch(config) vlan 20
+switch(config-vlan)# name SIGMA2
+exit
+
+##asign ports to vlan
+
+switch(config)# interface range fa0/1 - 2
+switch(config-if)# switchport mode access
+                    switchport acess vlan 10 
+changes port fa0/1-2 as access port and assign them as vlan 10
+
+switch(config)# interface range fa0/3 - 4
+switch(config-if)# switchport mode access
+                    switchport acess vlan 20 
+##changes port fa0/3-4 as access port and assign them as vlan 20
+
+##confgire the port connected to the router as a trunk port
+switch(config)# int f0/24
+switch(config-if) switchport mode trunk
+                    switchport encapsulation dot1q (if suporrted)
+                    switchport trunk allowed vlan 10,20
+                    exit
+
+#CHECK VLAN
+switch# show vlan b
+
+Check trunk
+switch# show interfaces trunk
+
+
+                    
 
 Router on A stick COnfig
 ###Create Virtaul subinteraces on one physical interface 
