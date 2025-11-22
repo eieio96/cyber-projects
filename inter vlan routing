@@ -20,11 +20,37 @@ SUBINTERFACES on a router have the same MAC, this is fine because Each Vlan has 
 Router on A stick COnfig
 ###Create Virtaul subinteraces on one physical interface 
 Each subinterface has its own NETWORK ID acting as a gateway for devices in different VLAN
-You tagged each sub-int with encapsulation dot1Q 10 20 or 30 
+You tagged each sub-int with encapsulation dot1Q 10 20 or 30, now the router knows any time it recives a frame with a vlan tag send it to that sub-int
+
+routerrouter(config)# int g/0/0 not shut
 
 router(config)# interface g0/0/0.10 (.10 can really be .69 but should match vlan ID)
-router(config)# encapsulation dot1Q 10 (tells the router this sub interface handles vlan 10 traffic, any frame leaving this sub-int gets tagged with 10.
+router(config-subif)# encapsulation dot1Q 10 (tells the router this sub interface handles vlan 10 traffic, any frame leaving this sub-int gets tagged with 10.
+router(config-subif)# ip addr 192.168.10.1 255.255.255.0
 
+router(config)# int g0/0/0.20
+router(config-subif)# encapsulation dot1Q 20
+router(config-subif)# ip addr 192.168.20.1 255.255.255.0
+
+DHCP CONFIG
+DHCP works in router config utizliing vlan tags
+PC broadcast DHCP to switch, switch sends its out the trunk port and tags it with the VLAN ID IT came from, Router recieves it sees vlan 10 ID lets .10 sub-int handle it. IT checks its network of the sub-int and mathces it to the correct dhcp pool.
+
+EXCLUDE GATEWAY IPs
+router(config)# ip dhcp excluded-address 192.168.10.1
+router(config)# ip dhcp excluded-address 192.168.20.1
+
+router(config)# ip dhcp pool VLAN10 (vlan10 is just a name)
+router(dhcp-config)# network 192.168.10.0 255.255.255.0
+                     default-router 192.168.10.1
+                     dns-server 8.8.8.8    
+                     exit
+
+router(config)# ip dhcp pool VLAN20  (vlan20 is just a name)
+router(dhcp-config)# network 192.168.20.0 255.255.255.0
+                     default-router 192.168.20.1
+                     dns-server 8.8.8.8    
+                     exit
 
 
 
