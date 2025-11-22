@@ -11,89 +11,31 @@ when you do
 VLANs are seperate esentially sperate networks in one switch and requires a router or layer 3 switch to function.
 END point devices are not awere they are even part of a vlan.
 Frame within vlans are not tagged, but when it leaves a trunk port it gets tagged with the vlan it came from.
-When a router recieves an tagged port it gets untagged and gets tagged with the vlan it belogns to.
+When a router recieves an tagged port it gets untagged and gets tagged with the vlan the frame is destined to.
 When the trunk port recives the tagged frame it strips it and sends it to the vlan it belongs to.
 TRUNK PORTS belong to all vlans
-Each Vlan has their own MAC ADDRESS TABLES
+SUBINTERFACES on a router have the same MAC, this is fine because Each Vlan has their own MAC ADDRESS TABLES 
+
+
+Router on A stick COnfig
+###Create Virtaul subinteraces on one physical interface 
+Each subinterface has its own NETWORK ID acting as a gateway for devices in different VLAN
+You tagged each sub-int with encapsulation dot1Q 10 20 or 30 
+
+router(config)# interface g0/0/0.10 (.10 can really be .69 but should match vlan ID)
+router(config)# encapsulation dot1Q 10 (tells the router this sub interface handles vlan 10 traffic, any frame leaving this sub-int gets tagged with 10.
 
 
 
-Set up dhcp server where dhcp server is on a another network
-__________________________________________________________
-int 
-ip helper-address <ip-address-of-dhcp-server>
-
-TRUNK PORTS BELONG TO ALL VLANS
 
 
-Network Setup Summary: VLAN 10 & VLAN 20 with DHCP Relay
 
-VLAN Configuration (on both switches):
 
-    Created VLANs:
 
-        vlan 10 (creates vlan)
-        name sigma (creates name)
 
-        vlan 20
 
-    Assigned access ports:
 
-        fa0/1 and fa0/2 to VLAN 10
 
-        fa0/3 to VLAN 20 (for DHCP server)
-
-        Commands used:
-
-            interface range fa0/1 - 2
-
-            switchport mode access
-
-            switchport access vlan 10
-
-            interface fa0/3
-
-            switchport mode access
-
-            switchport access vlan 20
-
-Router Configuration (Router-on-a-Stick):
-
-    Subinterface for VLAN 10:
-
-        interface g0/0/0.10
-
-        encapsulation dot1Q 10
-
-        ip address 192.168.10.1 255.255.255.0
-
-        ip helper-address 192.168.20.2 to relay dhcp broadcst to dhcp server
-
-    Subinterface for VLAN 20:
-
-        interface fa0/0.20
-
-        encapsulation dot1Q 20
-
-        ip address 192.168.20.1 255.255.255.0
-
-DHCP Server Setup (in VLAN 20):
-
-    Static IP: 192.168.20.2
-
-    Subnet mask: 255.255.255.0
-
-    Default gateway: 192.168.20.1
-
-    DHCP pool for VLAN 10:
-
-        Network: 192.168.10.0
-
-        Subnet mask: 255.255.255.0
-
-        Default gateway: 192.168.10.1
-
-        IP range: 192.168.10.100 to 192.168.10.200
 
 
 
