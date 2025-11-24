@@ -95,6 +95,8 @@ router(dhcp-config)# network 192.168.20.0 255.255.255.0
                      dns-server 8.8.8.8    
                      exit
 
+Router Drops all broadcast packets, and DHCP utizlies broadcaset for discover, unless told with the helper command the router will drop all broadcast packets, this tells it forward it to the dhcp server
+ip helper-address <IP>
 
 
 
